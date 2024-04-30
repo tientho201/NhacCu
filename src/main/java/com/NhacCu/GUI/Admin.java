@@ -33,6 +33,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javax.swing.border.MatteBorder;
+
+import com.NhacCu.BUS.NhanVienBUS;
+import com.NhacCu.DTO.NhanVienDTO;
 
 public class Admin extends JFrame {
 	Color ClickedColor = new Color(255, 128, 128);
@@ -52,7 +56,8 @@ public class Admin extends JFrame {
 	private JPanel panel_12;
 	private JPanel panel_13;
 	private JPanel MainContent;
-	public JLabel tendangnhap;
+	public static JLabel tendangnhap;
+	private NhanVienBUS nhanVienBUS = new NhanVienBUS();
 
 	/**
 	 * Launch the application.
@@ -102,41 +107,36 @@ public class Admin extends JFrame {
 
 		JMenu mnNewMenu = new JMenu("Tùy chọn");
 		menuBar.add(mnNewMenu);
-		
+
 		JMenuItem menuDangXuat = new JMenuItem("Đăng xuất");
-		menuDangXuat.setIcon(new ImageIcon(Admin.class.getResource("/com/NhacCu/item/Custom-Icon-Design-Pretty-Office-6-Logout.16.png")));
+		menuDangXuat.setIcon(new ImageIcon(
+				Admin.class.getResource("/com/NhacCu/item/Custom-Icon-Design-Pretty-Office-6-Logout.16.png")));
 		mnNewMenu.add(menuDangXuat);
 		menuDangXuat.addActionListener(new ActionListener() {
-			 @Override
-	            public void actionPerformed(ActionEvent e) {
-	                int result = JOptionPane.showConfirmDialog(null,
-	                        "Bạn có chắc chắn đăng xuất không?",
-	                        "Xác nhận",
-	                        JOptionPane.YES_NO_OPTION,
-	                        JOptionPane.QUESTION_MESSAGE);
-	                if(result == JOptionPane.YES_OPTION){
-	                	setVisible(false);
-	                	Login login = new Login();
-	    				login.setVisible(true);
-	                }
-	            }
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn đăng xuất không?", "Xác nhận",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (result == JOptionPane.YES_OPTION) {
+					setVisible(false);
+					Login login = new Login();
+					login.setVisible(true);
+				}
+			}
 		});
 
 		JMenuItem menuThoat = new JMenuItem("Thoát");
 		menuThoat.setIcon(new ImageIcon(Admin.class.getResource("/com/NhacCu/item/out.png")));
 		mnNewMenu.add(menuThoat);
 		menuThoat.addActionListener(new ActionListener() {
-			 @Override
-	            public void actionPerformed(ActionEvent e) {
-	                int result = JOptionPane.showConfirmDialog(null,
-	                        "Bạn có chắc chắn thoát không?",
-	                        "Xác nhận",
-	                        JOptionPane.YES_NO_OPTION,
-	                        JOptionPane.QUESTION_MESSAGE);
-	                if(result == JOptionPane.YES_OPTION){
-	                	setVisible(false);
-	                }
-	            }
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn thoát không?", "Xác nhận",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (result == JOptionPane.YES_OPTION) {
+					setVisible(false);
+				}
+			}
 		});
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -184,6 +184,7 @@ public class Admin extends JFrame {
 		panel_2.setBackground(new Color(255, 128, 128));
 		panel_1.add(panel_2);
 		panel_2.setLayout(null);
+		panel_2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		panel_2.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				panel2MousePressed(e);
@@ -206,6 +207,7 @@ public class Admin extends JFrame {
 		panel_3.setBackground(new Color(0, 0, 0));
 		panel_1.add(panel_3);
 		panel_3.setLayout(null);
+		panel_3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		panel_3.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				panel3MousePressed(e);
@@ -227,6 +229,7 @@ public class Admin extends JFrame {
 		panel_4.setBackground(new Color(0, 0, 0));
 		panel_1.add(panel_4);
 		panel_4.setLayout(null);
+		panel_4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		panel_4.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				panel4MousePressed(e);
@@ -249,6 +252,7 @@ public class Admin extends JFrame {
 		panel_5.setBackground(new Color(0, 0, 0));
 		panel_1.add(panel_5);
 		panel_5.setLayout(null);
+		panel_5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		panel_5.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				panel5MousePressed(e);
@@ -270,6 +274,7 @@ public class Admin extends JFrame {
 		panel_6.setBackground(new Color(0, 0, 0));
 		panel_1.add(panel_6);
 		panel_6.setLayout(null);
+		panel_6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		panel_6.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				panel6MousePressed(e);
@@ -291,6 +296,7 @@ public class Admin extends JFrame {
 		panel_7.setBackground(new Color(0, 0, 0));
 		panel_1.add(panel_7);
 		panel_7.setLayout(null);
+		panel_7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		panel_7.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				panel7MousePressed(e);
@@ -312,6 +318,7 @@ public class Admin extends JFrame {
 		panel_8.setBackground(new Color(0, 0, 0));
 		panel_1.add(panel_8);
 		panel_8.setLayout(null);
+		panel_8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		panel_8.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				panel8MousePressed(e);
@@ -333,6 +340,7 @@ public class Admin extends JFrame {
 		panel_9.setBackground(new Color(0, 0, 0));
 		panel_1.add(panel_9);
 		panel_9.setLayout(null);
+		panel_9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		panel_9.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				panel9MousePressed(e);
@@ -354,6 +362,7 @@ public class Admin extends JFrame {
 		panel_10.setBackground(new Color(0, 0, 0));
 		panel_1.add(panel_10);
 		panel_10.setLayout(null);
+		panel_10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		panel_10.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				panel10MousePressed(e);
@@ -375,6 +384,7 @@ public class Admin extends JFrame {
 		panel_11.setBackground(new Color(0, 0, 0));
 		panel_1.add(panel_11);
 		panel_11.setLayout(null);
+		panel_11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 		panel_11.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				panel11MousePressed(e);
@@ -396,6 +406,12 @@ public class Admin extends JFrame {
 		panel_12.setBackground(new Color(0, 0, 0));
 		panel_1.add(panel_12);
 		panel_12.setLayout(null);
+		panel_12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		panel_12.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				panel12MousePressed(e);
+			}
+		});
 
 		JLabel lbliThngTin = new JLabel("Đổi Thông Tin");
 		lbliThngTin.setHorizontalAlignment(SwingConstants.CENTER);
@@ -409,6 +425,16 @@ public class Admin extends JFrame {
 		panel_13.setBackground(new Color(0, 0, 0));
 		panel_1.add(panel_13);
 		panel_13.setLayout(null);
+		panel_13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		panel_13.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn thoát?", "Xác nhận",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (result == JOptionPane.YES_OPTION) {
+					dispose();
+				}
+			}
+		});
 
 		JLabel lblThot = new JLabel("Thoát");
 		lblThot.setHorizontalAlignment(SwingConstants.CENTER);
@@ -416,6 +442,16 @@ public class Admin extends JFrame {
 		lblThot.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblThot.setBounds(10, 10, 198, 23);
 		panel_13.add(lblThot);
+
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(255, 255, 255)));
+		lblNewLabel_2.setBounds(0, 556, 218, 13);
+		panel_1.add(lblNewLabel_2);
+
+		JLabel lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setBounds(-1, -4, 223, 9);
+		panel_1.add(lblNewLabel_3);
+		lblNewLabel_3.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(255, 255, 255)));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -711,4 +747,50 @@ public class Admin extends JFrame {
 		MainContent.revalidate();
 		MainContent.repaint();
 	}
+
+	public void panel12MousePressed(MouseEvent evt) {
+		panel_2.setBackground(DefaultColor);
+		panel_3.setBackground(DefaultColor);
+		panel_4.setBackground(DefaultColor);
+		panel_5.setBackground(DefaultColor);
+		panel_6.setBackground(DefaultColor);
+		panel_7.setBackground(DefaultColor);
+		panel_8.setBackground(DefaultColor);
+		panel_9.setBackground(DefaultColor);
+		panel_10.setBackground(DefaultColor);
+		panel_11.setBackground(DefaultColor);
+		panel_12.setBackground(ClickedColor);
+		panel_13.setBackground(DefaultColor);
+		MainContent.removeAll();
+		DoiThongTin doiThongTin = new DoiThongTin();
+		doiThongTin.setVisible(true);
+		MainContent.revalidate();
+		MainContent.repaint();
+
+		nhanVienBUS.listNV();
+
+		String chuoiCon = tendangnhap.getText().substring(tendangnhap.getText().indexOf(":") + 1).trim();
+		doiThongTin.textFieldTenDangNhap.setText(chuoiCon);
+
+		for (NhanVienDTO nvDTO : nhanVienBUS.getList()) {
+			if (nvDTO.getTenDangNhap().equals(chuoiCon)) {
+				doiThongTin.textFieldMaNguoiDung.setText(nvDTO.getMaNhanVien());
+				doiThongTin.textFieldHovaTen.setText(nvDTO.getTenNhanVien());
+				doiThongTin.textFieldDiaChi.setText(nvDTO.getDiaChi());
+				doiThongTin.textFieldNgaySinh.setText(nvDTO.getNgaySinh());
+				doiThongTin.textFieldSoDienThoai.setText(nvDTO.getSDT());
+				if (nvDTO.getGioiTinh().equals("Nam")) {
+					doiThongTin.rdbtnNam.setSelected(true);
+					
+
+				} else {
+					doiThongTin.rdbtnNu.setSelected(true);
+					
+				}
+				break;
+			}
+		}
+
+	}
+
 }

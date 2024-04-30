@@ -96,5 +96,12 @@ public class PhieuNhapHangBUS {
 		}
 		return false ; 
 	}
-	
+	public String PutOnNgayNhap(String maPN) {
+		for (PhieuNhapHangDTO pnh : ds) {
+			if(pnh.getMaPNH().equals(maPN)) {
+				return pnh.getNgayNhap();
+			}
+		}
+		return null ; 
+	}
 }

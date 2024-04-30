@@ -12,6 +12,10 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.NhacCu.BUS.NhanVienBUS;
+import com.NhacCu.DTO.NhanVienDTO;
+
 import java.awt.Color;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -31,9 +35,10 @@ public class BanHang extends JFrame {
 	public static JMenuItem menuThongKe;
 	public JMenuItem MenuDangXuat;
 	public JMenuItem menuThoat;
+	private JMenuItem menuDoiThongTin;
 	public static JMenuItem MenuTenDangNhap;
 	public static JMenuItem menuBaoTri;
-
+	private NhanVienBUS nhanVienBUS = new NhanVienBUS();
 	/**
 	 * Launch the application.
 	 */
@@ -173,6 +178,17 @@ public class BanHang extends JFrame {
 		});
 
 		mnNewMenu.addSeparator();
+		
+		 menuDoiThongTin = new JMenuItem("Đổi thông tin");
+		menuDoiThongTin.setIcon(new ImageIcon(BanHang.class.getResource("/com/NhacCu/item/Pictogrammers-Material-Account-cog.16.png")));
+		mnNewMenu.add(menuDoiThongTin);
+		menuDoiThongTin.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				DoiThongTinMousePressed(e);
+			}
+
+			
+		});
 
 		MenuDangXuat = new JMenuItem("Đăng xuất");
 		MenuDangXuat.setIcon(new ImageIcon(BanHang.class.getResource("/com/NhacCu/item/logout-icon.jpg")));
@@ -219,6 +235,7 @@ public class BanHang extends JFrame {
 		menuBaoTri.setBackground(DefaultColor);
 		menuLSDonHang.setBackground(DefaultColor);
 		menuThongKe.setBackground(DefaultColor);
+		menuDoiThongTin.setBackground(DefaultColor);
 		MainContent.removeAll();
 		BanHang_TrangChu trangchu = new BanHang_TrangChu();
 		MainContent.add(trangchu).setVisible(true);
@@ -242,6 +259,7 @@ public class BanHang extends JFrame {
 		menuBaoTri.setBackground(DefaultColor);
 		menuLSDonHang.setBackground(DefaultColor);
 		menuThongKe.setBackground(DefaultColor);
+		menuDoiThongTin.setBackground(DefaultColor);
 		MainContent.removeAll();
 		BanHang_DonHang donHang = new BanHang_DonHang();
 		MainContent.add(donHang).setVisible(true);
@@ -264,7 +282,7 @@ public class BanHang extends JFrame {
 		menuDsKH.setBackground(ClickedColor);
 		menuBaoTri.setBackground(DefaultColor);
 		menuLSDonHang.setBackground(DefaultColor);
-		menuThongKe.setBackground(DefaultColor);
+		menuThongKe.setBackground(DefaultColor);		menuDoiThongTin.setBackground(DefaultColor);
 		MainContent.removeAll();
 		BanHang_DSKhachHang dsKH = new BanHang_DSKhachHang();
 		MainContent.add(dsKH).setVisible(true);
@@ -287,7 +305,7 @@ public class BanHang extends JFrame {
 		menuDsKH.setBackground(DefaultColor);
 		menuBaoTri.setBackground(ClickedColor);
 		menuLSDonHang.setBackground(DefaultColor);
-		menuThongKe.setBackground(DefaultColor);
+		menuThongKe.setBackground(DefaultColor);		menuDoiThongTin.setBackground(DefaultColor);
 		MainContent.removeAll();
 		BanHang_BaoTri baoTri = new BanHang_BaoTri();
 		MainContent.add(baoTri).setVisible(true);
@@ -310,7 +328,7 @@ public class BanHang extends JFrame {
 		menuDsKH.setBackground(DefaultColor);
 		menuBaoTri.setBackground(DefaultColor);
 		menuLSDonHang.setBackground(ClickedColor);
-		menuThongKe.setBackground(DefaultColor);
+		menuThongKe.setBackground(DefaultColor);		menuDoiThongTin.setBackground(DefaultColor);
 		MainContent.removeAll();
 		BanHang_LSDonHang LSdonhang = new BanHang_LSDonHang();
 		MainContent.add(LSdonhang).setVisible(true);
@@ -333,7 +351,7 @@ public class BanHang extends JFrame {
 		menuDsKH.setBackground(DefaultColor);
 		menuBaoTri.setBackground(DefaultColor);
 		menuLSDonHang.setBackground(DefaultColor);
-		menuThongKe.setBackground(ClickedColor);
+		menuThongKe.setBackground(ClickedColor);		menuDoiThongTin.setBackground(DefaultColor);
 		MainContent.removeAll();
 		BanHang_ThongKe thongKe = new BanHang_ThongKe();
 		MainContent.add(thongKe).setVisible(true);
@@ -348,5 +366,42 @@ public class BanHang extends JFrame {
 		MainContent.add(thongKe).setVisible(true);
 		MainContent.revalidate();
 		MainContent.repaint();
+	}
+	public void DoiThongTinMousePressed(MouseEvent evt) {
+		menuTrangChu.setBackground(DefaultColor);
+		menuDonHang.setBackground(DefaultColor);
+		menuDsKH.setBackground(DefaultColor);
+		menuBaoTri.setBackground(DefaultColor);
+		menuLSDonHang.setBackground(DefaultColor);
+		menuThongKe.setBackground(DefaultColor);
+		menuDoiThongTin.setBackground(ClickedColor);
+	
+		DoiThongTin doiThongTin = new DoiThongTin();
+		doiThongTin.setVisible(true);
+	
+		nhanVienBUS.listNV();
+
+		String chuoiCon = MenuTenDangNhap.getText().substring(MenuTenDangNhap.getText().indexOf(":") + 1).trim();
+		doiThongTin.textFieldTenDangNhap.setText(chuoiCon);
+
+		for (NhanVienDTO nvDTO : nhanVienBUS.getList()) {
+			if (nvDTO.getTenDangNhap().equals(chuoiCon)) {
+				doiThongTin.textFieldMaNguoiDung.setText(nvDTO.getMaNhanVien());
+				doiThongTin.textFieldHovaTen.setText(nvDTO.getTenNhanVien());
+				doiThongTin.textFieldDiaChi.setText(nvDTO.getDiaChi());
+				doiThongTin.textFieldNgaySinh.setText(nvDTO.getNgaySinh());
+				doiThongTin.textFieldSoDienThoai.setText(nvDTO.getSDT());
+				if (nvDTO.getGioiTinh().equals("Nam")) {
+					doiThongTin.rdbtnNam.setSelected(true);
+					
+
+				} else {
+					doiThongTin.rdbtnNu.setSelected(true);
+					
+				}
+				break;
+			}
+		}
+
 	}
 }

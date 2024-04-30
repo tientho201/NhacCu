@@ -229,7 +229,8 @@ public class Login extends JFrame {
 								}else{
 									if(accBUS.checkRole(tenDangNhapValue).equals("ChuDoanhNghiep")) {
 										Admin admin = new Admin();
-										admin.show();
+						
+										admin.setVisible(true);
 										admin.tendangnhap.setText("Xin Chào:  " + tenDangNhapValue);
 									}
 								}

@@ -54,6 +54,7 @@ public class QuanLyNhanVien extends JFrame {
 	private JTextField textSoDienThoai;
 	private JTextField textMaNhanVien;
 	private JTextArea textAreaGhiChu;
+	private JMenuItem menuDoiThongTin;
 	/**
 	 * Launch the application.
 	 */
@@ -121,6 +122,17 @@ public class QuanLyNhanVien extends JFrame {
 		
 		mnNewMenu.addSeparator();
 		
+		menuDoiThongTin = new JMenuItem("Đổi thông tin");
+		menuDoiThongTin.setIcon(new ImageIcon(QuanLyNhanVien.class.getResource("/com/NhacCu/item/icon-login.jpg")));
+		mnNewMenu.add(menuDoiThongTin);
+		menuDoiThongTin.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				DoiThongTinMousePressed(e);
+			}
+
+			
+		});
+		
 		JMenuItem LogOut = new JMenuItem("LogOut");
 		LogOut.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		LogOut.setHorizontalAlignment(SwingConstants.LEFT);
@@ -149,7 +161,7 @@ public class QuanLyNhanVien extends JFrame {
 		mnNewMenu.add(menuThoat);
 		contentPane = new JPanel();
 //		menuThoat.setBorder(new EmptyBorder(5, 5, 5, 5));
-		LogOut.addActionListener(new ActionListener() {
+		menuThoat.addActionListener(new ActionListener() {
 			 @Override
 	            public void actionPerformed(ActionEvent e) {
 	                int result = JOptionPane.showConfirmDialog(null,
@@ -498,6 +510,7 @@ public class QuanLyNhanVien extends JFrame {
 				model.addRow(new Object[] {  nv.getMaNhanVien(), nv.getTenDangNhap(), nv.getTenNhanVien(),
 						nv.getGioiTinh(), nv.getNgaySinh(), nv.getSDT(), nv.getDiaChi() , nv.getGhiChu() });
 			}
+			
 		}
 	    // Cập nhật lại model cho JTable
 	    table.setModel(model);
@@ -558,5 +571,35 @@ public class QuanLyNhanVien extends JFrame {
 			}
 			
 		}
+	}
+	public void DoiThongTinMousePressed(MouseEvent evt) {
+	
+		DoiThongTin doiThongTin = new DoiThongTin();
+		doiThongTin.setVisible(true);
+	
+		nhanVienBUS.listNV();
+
+		String chuoiCon = TextShowName.getText().substring(TextShowName.getText().indexOf(":") + 1).trim();
+		doiThongTin.textFieldTenDangNhap.setText(chuoiCon);
+
+		for (NhanVienDTO nvDTO : nhanVienBUS.getList()) {
+			if (nvDTO.getTenDangNhap().equals(chuoiCon)) {
+				doiThongTin.textFieldMaNguoiDung.setText(nvDTO.getMaNhanVien());
+				doiThongTin.textFieldHovaTen.setText(nvDTO.getTenNhanVien());
+				doiThongTin.textFieldDiaChi.setText(nvDTO.getDiaChi());
+				doiThongTin.textFieldNgaySinh.setText(nvDTO.getNgaySinh());
+				doiThongTin.textFieldSoDienThoai.setText(nvDTO.getSDT());
+				if (nvDTO.getGioiTinh().equals("Nam")) {
+					doiThongTin.rdbtnNam.setSelected(true);
+					
+
+				} else {
+					doiThongTin.rdbtnNu.setSelected(true);
+					
+				}
+				break;
+			}
+		}
+
 	}
 }

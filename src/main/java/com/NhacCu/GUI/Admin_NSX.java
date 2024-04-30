@@ -2,7 +2,12 @@ package com.NhacCu.GUI;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
@@ -12,17 +17,30 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.NhacCu.BUS.NhaSanXuatBUS;
+import com.NhacCu.DTO.NhaSanXuatDTO;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class Admin_NSX extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textFieldMaNSX;
+	private JTextField textFieldTenNSX;
 	private JTable table;
-
+	private NhaSanXuatBUS nsxBUS = new NhaSanXuatBUS();
 	/**
 	 * Create the panel.
 	 */
 	public Admin_NSX() {
+		initComponents();
+
+		if (nsxBUS.getList() == null)
+			nsxBUS.list();
+		initTable(nsxBUS.getList());
+	}
+
+	public void initComponents(){
 		setBounds(0, 0, 1117, 685);
 		setLayout(null);
 		
@@ -72,15 +90,15 @@ public class Admin_NSX extends JPanel {
 		lblNewLabel_2_1.setBounds(140, 91, 173, 30);
 		panel_3.add(lblNewLabel_2_1);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(378, 33, 210, 30);
-		panel_3.add(textField);
+		textFieldMaNSX = new JTextField();
+		textFieldMaNSX.setColumns(10);
+		textFieldMaNSX.setBounds(378, 33, 210, 30);
+		panel_3.add(textFieldMaNSX);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(378, 94, 210, 30);
-		panel_3.add(textField_1);
+		textFieldTenNSX = new JTextField();
+		textFieldTenNSX.setColumns(10);
+		textFieldTenNSX.setBounds(378, 94, 210, 30);
+		panel_3.add(textFieldTenNSX);
 		
 		JLabel lblThongBao = new JLabel("");
 		lblThongBao.setForeground(Color.RED);
@@ -95,28 +113,131 @@ public class Admin_NSX extends JPanel {
 		add(panel_4);
 		
 		JButton btnThem = new JButton("Thêm");
+		btnThem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				them();
+			}
+		});
 		btnThem.setIcon(new ImageIcon(Admin_NSX.class.getResource("/com/NhacCu/item/plus_24.png")));
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnThem.setBounds(27, 10, 103, 31);
 		panel_4.add(btnThem);
 		
 		JButton btnSua = new JButton("Sửa");
+		btnSua.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				sua();
+			}
+		});
 		btnSua.setIcon(new ImageIcon(Admin_NSX.class.getResource("/com/NhacCu/item/pencil_24.png")));
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnSua.setBounds(326, 10, 103, 31);
 		panel_4.add(btnSua);
 		
 		JButton btnXoa = new JButton("Xóa");
+		btnXoa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				xoa();
+			}
+		});
 		btnXoa.setIcon(new ImageIcon(Admin_NSX.class.getResource("/com/NhacCu/item/remove_24.png")));
 		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnXoa.setBounds(698, 10, 103, 31);
 		panel_4.add(btnXoa);
 		
 		JButton btnReload = new JButton("Reload");
+		btnReload.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				reload();
+			}
+		});
 		btnReload.setIcon(new ImageIcon(Admin_NSX.class.getResource("/com/NhacCu/item/refresh_24.png")));
 		btnReload.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnReload.setBounds(964, 10, 123, 31);
 		panel_4.add(btnReload);
 	}
+	public void them() {
+		if (kiemtraRong()) {
+			if (!nsxBUS.checkMaNSX(textFieldMaNSX.getText())) {
+				NhaSanXuatDTO nsxDTO = new NhaSanXuatDTO(textFieldMaNSX.getText(), textFieldTenNSX.getText());
+				nsxBUS.add(nsxDTO);
+				JOptionPane.showMessageDialog(null, "Thêm thành công", "Thông báo", JOptionPane.DEFAULT_OPTION);
+				initTable(nsxBUS.getList());
+				reload();
 
+			} else {
+				JOptionPane.showMessageDialog(null, "NSX bị trùng", "Thông báo", JOptionPane.DEFAULT_OPTION);
+
+			}
+		}
+	}
+
+	public void sua() {
+		if (kiemtraRong()) {
+			NhaSanXuatDTO nsxDTO = new NhaSanXuatDTO(textFieldMaNSX.getText(), textFieldTenNSX.getText());
+			nsxBUS.update(nsxDTO);
+			JOptionPane.showMessageDialog(null, "Sửa thành công", "Thông báo", JOptionPane.DEFAULT_OPTION);
+			initTable(nsxBUS.getList());
+			reload();
+		}
+	}
+
+	public void xoa() {
+		if (kiemtraRong()) {
+			nsxBUS.delete(textFieldMaNSX.getText());
+			JOptionPane.showMessageDialog(null, "Xóa thành công", "Thông báo", JOptionPane.DEFAULT_OPTION);
+			initTable(nsxBUS.getList());
+			reload();
+		}
+	}
+
+	public void reload() {
+		textFieldMaNSX.setText("");
+		textFieldMaNSX.setEditable(true);
+		textFieldMaNSX.setEnabled(true);
+		textFieldTenNSX.setText("");
+	}
+
+	public void initTable(ArrayList<NhaSanXuatDTO> list) {
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("Mã NSX");
+		model.addColumn("Tên NSX");
+
+		// Đổ dữ liệu vào DefaultTableModel
+		for (NhaSanXuatDTO nsx : list) {
+			model.addRow(new Object[] { nsx.getMaNSX(), nsx.getTenNSX() });
+
+		}
+
+		// Sử dụng DefaultTableModel để tạo JTable
+		this.table.setModel(model);
+		// Cho phép table sắp xếp
+		table.setAutoCreateRowSorter(true);
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				int index = table.getSelectedRow();
+				textFieldMaNSX.setText((String) table.getValueAt(index, 0));
+				textFieldMaNSX.setEditable(false);
+				textFieldMaNSX.setEnabled(false);
+				textFieldTenNSX.setText((String) table.getValueAt(index, 1));
+			}
+		});
+	}
+
+	public boolean kiemtraRong() {
+		if (textFieldMaNSX.getText() == null || textFieldMaNSX.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Mã NSX không được trống!", "Thông báo",
+					JOptionPane.DEFAULT_OPTION);
+			textFieldMaNSX.requestFocus();
+			return false;
+		}
+		if (textFieldTenNSX.getText() == null || textFieldTenNSX.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Tên NSX không được trống!", "Thông báo",
+					JOptionPane.DEFAULT_OPTION);
+			textFieldTenNSX.requestFocus();
+			return false;
+		}
+
+		return true;
+	}
 }

@@ -24,10 +24,11 @@ public class HoaDonDAO {
 				String MaHoaDon = rs.getString("MaHD");
 				String MaNhanVien = rs.getString("MaNhanVien");
 				String MaUser = rs.getString("MaUser");
-				String NgayNhap = rs.getString("NgayNhap");
+				String NgayLap = rs.getString("NgayLap");
 				int TongTien = rs.getInt("TongTien");
-				String TrangThai = rs.getString("TrangThai");
-				HoaDonDTO hoaDonDTO = new HoaDonDTO(MaHoaDon , MaNhanVien , MaUser , NgayNhap , TongTien , TrangThai);
+				int TrangThai = rs.getInt("Enable");
+				int ThanhToan = rs.getInt("ThanhToan");
+				HoaDonDTO hoaDonDTO = new HoaDonDTO(MaHoaDon , MaNhanVien , MaUser , NgayLap , TongTien , TrangThai , ThanhToan);
 				ds.add(hoaDonDTO);
 			}
 			rs.close();
@@ -42,9 +43,10 @@ public class HoaDonDAO {
 		String sql = "UPDATE HoaDon SET ";
 		sql += "MaNhanVien = N'" + hd.getMaNhanVien() + "', ";
 		sql += "MaUser = N'" + hd.getMaUser() + "', ";
-		sql += "NgayNhap = N'" + hd.getNgayLap() + "', ";
+		sql += "NgayLap = N'" + hd.getNgayLap() + "', ";
 		sql += "TongTien = " + hd.getTongTien() + ", ";
-		sql += "TrangThai = N'" + hd.getTrangThai() + "' ";
+		sql += "Enable = " + hd.getEnable() + " , ";
+		sql += "ThanhToan = " + hd.getThanhToan() + "  ";
 		sql += "Where MaHD = '" + hd.getMaHoaDon() + "';";
 		System.out.println(sql);
 		connection.executeUpdate(sql);
@@ -57,7 +59,8 @@ public class HoaDonDAO {
 		sql += "N'" + hd.getMaUser() + "',";
 		sql += "N'" + hd.getNgayLap() + "',";
 		sql += "" + hd.getTongTien() + ",";
-		sql += "N'" +  hd.getTrangThai() + "');";
+		sql += "" + hd.getEnable() + ",";
+		sql += "" +  hd.getThanhToan() + ");";
 		System.out.println(sql);
 		connection.executeUpdate(sql);
 	}

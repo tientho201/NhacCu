@@ -63,6 +63,21 @@ public class HoaDonBUS {
 			}
 		}
 	}
-
-	
+	public int CountBuyProduct(String maKH) {
+		int count = 0 ; 
+		for (HoaDonDTO hd : ds) {
+			if (hd.getMaUser().equals(maKH)) {
+				count++ ; 
+			}
+		}
+		return count ; 
+	}
+	public String PutOnNgayLap(String MaHD) {
+		for (HoaDonDTO hd : ds) {
+			if(hd.getMaHoaDon().equals(MaHD)) {
+				return hd.getNgayLap();
+			}
+		}
+		return null ; 
+	}
 }

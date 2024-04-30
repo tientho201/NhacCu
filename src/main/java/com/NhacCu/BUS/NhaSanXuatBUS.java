@@ -69,4 +69,12 @@ public class NhaSanXuatBUS {
 		}
 			return false;
 	}
+	public String PutOnTenNSX(String maNSX) {
+		for (NhaSanXuatDTO nsx : ds) {
+			if (nsx.getMaNSX().equals(maNSX)) {
+				return nsx.getTenNSX();
+			}
+		}
+			return null;
+	}
 }

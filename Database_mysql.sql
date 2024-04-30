@@ -8,7 +8,7 @@ USE NhacCu;
 CREATE TABLE Account (
   TenDangNhap NVARCHAR(100) NOT NULL,
   password NVARCHAR(100) NOT NULL,
-  role NVARCHAR(10) NOT NULL,
+  role NVARCHAR(100) NOT NULL,
   enable INT NOT NULL,
   PRIMARY KEY (TenDangNhap)
 );
@@ -87,6 +87,7 @@ CREATE TABLE HoaDon(
   NgayLap DATE NOT NULL ,
   TongTien int NOT null, 
   Enable INT NOT NULL , 
+  ThanhToan INT NOT NULL , 
   FOREIGN KEY (MaUser) REFERENCES Userr(MaUser),
   FOREIGN KEY (MaNhanVien) REFERENCES NhanVien(MaNhanVien)
 );
@@ -176,6 +177,7 @@ INSERT INTO Account (TenDangNhap, password, role , enable ) VALUES
 
 
 INSERT INTO NhanVien (MaNhanVien , TenDangNhap, TenNhanVien, GioiTinh, NgaySinh, SDT, DiaChi ,ChucVu,GhiChu, enable ) VALUES
+('CDN1','cdn', 'Chủ Doanh Nghiệp', 'Nam','2012-05-12', '0123456798', N'Việt Nam' ,'cdn',N'', 1 ),
 ('NV1','HAI', 'NGUYEN NGOC HAI', 'Nam','2012-05-12', '0123456798', N'Việt Nam' ,'NhanVien',N'', 1 ),
 ('NV2','KHANH', 'KHANH YASUA', 'Nam', '2012-05-12', '123456789', N'Việt Nam' ,'NhanVien',N'', 1),
 ('NV3','TRUONG', 'XUAN TRUONG', 'Nam', '2012-05-12', '123456789', N'Việt Nam' ,'NhanVien',N'', 1),
@@ -221,17 +223,18 @@ INSERT INTO NhaSanXuat(MaNSX , TenNSX) VALUES
 ('NSX6', N'Singapo');
 
 INSERT INTO SanPham(MaSP , TenSP , SoLuong, Gia , MaLoai , MaNSX ,Image, GhiChu) VALUES
-(N'SP1', N'Đàn Piano Apollo A8',21,550300 , N'L1', N'NSX1', NULL ,N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
-(N'SP2', N'Đàn Violin Antonius Braun',11,252000 , N'L2', N'NSX1',  NULL , N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
-(N'SP3', N'Đàn Violin Azmusic AZV130',15,155040 , N'L2', N'NSX5', NULL ,  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
-(N'SP4', N'Đàn Violin Kapok V182',27,512400 , N'L2', N'NSX1', NULL ,  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
-(N'SP5', N'Đàn Piano01',21,557000 , N'L1', N'NSX1', NULL ,  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
-(N'SP6', N'Đàn Piano Yamaha W106',21,552000 , N'L1', N'NSX3', NULL ,  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
-(N'SP7', N'Đàn Violin Kapok V188',1,525000 , N'L2', N'NSX1', NULL ,  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
-(N'SP8', N'Đàn Guitar Acoustic J260',31,155000 , N'L6', N'NSX2', NULL ,  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...');
+(N'SP1', N'Đàn Piano Apollo A8',10,550300 , N'L1', N'NSX1', N'' ,N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
+(N'SP2', N'Đàn Violin Antonius Braun',10,252000 , N'L2', N'NSX1',  N'' , N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
+(N'SP3', N'Đàn Violin Azmusic AZV130',10,155040 , N'L2', N'NSX5', N'' ,  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
+(N'SP4', N'Đàn Violin Kapok V182',10,512400 , N'L2', N'NSX1', N'' ,  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
+(N'SP5', N'Đàn Piano01',10,557000 , N'L1', N'NSX1', N'' ,  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
+(N'SP6', N'Đàn Piano Yamaha W106',10,552000 , N'L1', N'NSX3', N'' ,  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
+(N'SP7', N'Đàn Violin Kapok V188',10,525000 , N'L2', N'NSX1', N'' ,  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...'),
+(N'SP8', N'Đàn Guitar Acoustic J260',10,155000 , N'L6', N'NSX2', N'' ,  N'Đàn guitar acoustic AZMUSIC J260 có hai 2 chất liệu sơn bóng và sơn mờ tạo ra sự lựa chọn với phân khúc guitar tầm trung.- Với chất liệu gỗ nguyên tấm, mặt trước được làm từ gỗ thông ( Spruce ) và lưng hông được làm từ gỗ ...');
 
-INSERT INTO HoaDon(MaHD , MaNhanVien , MaUser , NgayLap , TongTien, Enable ) VALUES
-('HD1' , 'NV1' , 'Us2' , '2024-03-20'  , 4000000 , 1);
+INSERT INTO HoaDon(MaHD , MaNhanVien , MaUser , NgayLap , TongTien, Enable , ThanhToan ) VALUES
+('HD1' , 'NV1' , 'Us2' , '2024-03-20'  , 4000000 , 1 , 1),
+('HD2' , 'NV2' , 'Us2' , '2024-03-27'  , 4000000 , 1 , 0);
 
 
 INSERT INTO ChiTietHD(MaSP , MaHD , SoLuong , Gia , ThoiGianBaoHanh , GhiChu ) VALUES
@@ -239,14 +242,19 @@ INSERT INTO ChiTietHD(MaSP , MaHD , SoLuong , Gia , ThoiGianBaoHanh , GhiChu ) V
 (N'SP2' , N'HD1' ,5, 400000 , 2  , N'');
 
 INSERT INTO PhieuNhap(MaPNH , MaNCC ,MaNhanVien , NgayNhap , TongTien , Enable) VALUES 
-(N'P1' , N'NCC2' , N'QLK3' , N'2024-03-27' , 50000 , 1 ),
-(N'P2' , N'NCC2' , N'QLK3' , N'2024-03-27' , 600000 , 1 ),
-(N'P3' , N'NCC5' , N'QLK3' , N'2024-03-27' , 25000 , 1 );
+(N'PN1' , N'NCC2' , N'QLK3' , N'2024-03-27' , 750000 , 1 ),
+(N'PN2' , N'NCC2' , N'QLK3' , N'2024-03-28' , 1100000 , 1 ),
+(N'PN3' , N'NCC5' , N'QLK3' , N'2024-03-29' , 1550000 , 1 );
 
 
 INSERT INTO ChiTietPhieuNhap(MaSP , MaPNH , DonGiaNhap , SoLuong  , GhiChu ) VALUES
-(N'SP1' , N'P2' , 40000 , 5  , N''),
-(N'SP1' , N'P1' , 10000 , 5  , N''),
-(N'SP2' , N'P3' , 5000 , 5  , N''),
-(N'SP6' , N'P2' , 40000 , 5   , N''),
-(N'SP7' , N'P2' , 40000 , 5  , N'');
+(N'SP1' , N'PN1' , 40000 , 10  , N''),
+(N'SP2' , N'PN1' , 50000 , 5  , N''),
+(N'SP6' , N'PN1' , 20000 , 5  , N''),
+(N'SP6' , N'PN2' , 20000 , 5   , N''),
+(N'SP7' , N'PN2' , 40000 , 10  , N''),
+(N'SP8' , N'PN2' , 10000 , 10  , N''),
+(N'SP3' , N'PN2' , 50000 , 10  , N''),
+(N'SP2' , N'PN3' , 50000 , 5  , N''),
+(N'SP4' , N'PN3' , 50000 , 10  , N''),
+(N'SP5' , N'PN3' , 80000 , 10  , N'');

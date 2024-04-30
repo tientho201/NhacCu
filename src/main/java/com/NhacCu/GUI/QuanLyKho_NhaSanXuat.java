@@ -31,7 +31,7 @@ public class QuanLyKho_NhaSanXuat extends JPanel {
 	private JTextField textFieldMaNSX;
 	private JTextField textFieldTenNSX;
 	private NhaSanXuatBUS nsxBUS = new NhaSanXuatBUS();
-	private AbstractButton lblThongBao;
+	private JLabel lblThongBao;
 	/**
 	 * Create the panel.
 	 */

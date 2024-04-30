@@ -73,6 +73,13 @@ public class SanPhamBUS {
 		}
 		return false;
 	}
-
+	public String PutOnTenSP(String maSP) {
+		for (SanPhamDTO sp : dssp) {
+			if (sp.getMaSanPham().equals(maSP)) {
+				return sp.getTenSanPham();
+			}
+		}
+		return null ; 
+	}
 
 }

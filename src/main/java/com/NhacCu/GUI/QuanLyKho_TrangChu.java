@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.NhacCu.Controller.control_TrangChu_QuanLyKho;
+import com.NhacCu.DTO.NhanVienDTO;
 
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
@@ -20,10 +21,13 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.Color;
 
+import com.NhacCu.BUS.*;
 public class QuanLyKho_TrangChu extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -40,6 +44,8 @@ public class QuanLyKho_TrangChu extends JFrame {
 	public static QuanLyKho_NhaSanXuat QLK_NSX = new QuanLyKho_NhaSanXuat();
 	public static QuanLyKho_BaoTri QLK_BH = new QuanLyKho_BaoTri();
 	public Login login = new Login();
+	private JMenuItem menuDoiThongTin;
+	private NhanVienBUS nvBUS = new NhanVienBUS();
 
 	/**
 	 * Launch the application.
@@ -89,7 +95,16 @@ public class QuanLyKho_TrangChu extends JFrame {
 
 		JMenu mnNewMenu = new JMenu("Tùy Chọn");
 		menuBar.add(mnNewMenu);
+		
+		 menuDoiThongTin = new JMenuItem("Đổi thông tin");
+		menuDoiThongTin.setIcon(new ImageIcon(QuanLyKho_TrangChu.class.getResource("/com/NhacCu/item/Pictogrammers-Material-Account-cog.16.png")));
+		mnNewMenu.add(menuDoiThongTin);
+		menuDoiThongTin.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				DoiThongTinMousePressed(e);
+			}
 
+		});
 		JMenuItem mntmLogOut = new JMenuItem("LogOut");
 		mntmLogOut.setIcon(new ImageIcon(
 				QuanLyKho_TrangChu.class.getResource("/com/NhacCu/item/Custom-Icon-Design-Pretty-Office-6-Logout.16.png")));
@@ -158,6 +173,35 @@ public class QuanLyKho_TrangChu extends JFrame {
 		splitPane.setRightComponent(BottomPane);
 		BottomPane.setLayout(new BorderLayout(0, 0));
 		BottomPane.add(QLK_SP);
-		
+	}
+	public void DoiThongTinMousePressed(MouseEvent evt) {
+	
+		DoiThongTin doiThongTin = new DoiThongTin();
+		doiThongTin.setVisible(true);
+	
+		nvBUS.listNV();
+
+		String chuoiCon = tenDangNhap.getText().substring(tenDangNhap.getText().indexOf(":") + 1).trim();
+		doiThongTin.textFieldTenDangNhap.setText(chuoiCon);
+
+		for (NhanVienDTO nvDTO : nvBUS.getList()) {
+			if (nvDTO.getTenDangNhap().equals(chuoiCon)) {
+				doiThongTin.textFieldMaNguoiDung.setText(nvDTO.getMaNhanVien());
+				doiThongTin.textFieldHovaTen.setText(nvDTO.getTenNhanVien());
+				doiThongTin.textFieldDiaChi.setText(nvDTO.getDiaChi());
+				doiThongTin.textFieldNgaySinh.setText(nvDTO.getNgaySinh());
+				doiThongTin.textFieldSoDienThoai.setText(nvDTO.getSDT());
+				if (nvDTO.getGioiTinh().equals("Nam")) {
+					doiThongTin.rdbtnNam.setSelected(true);
+					
+
+				} else {
+					doiThongTin.rdbtnNu.setSelected(true);
+					
+				}
+				break;
+			}
+		}
+
 	}
 }

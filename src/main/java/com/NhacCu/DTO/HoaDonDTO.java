@@ -6,16 +6,18 @@ public class HoaDonDTO {
 	private String MaUser ; 
 	private String NgayLap ; 
 	private int TongTien ;
-	private String TrangThai ;
-	public HoaDonDTO(String maHoaDon, String maNhanVien, String maUser, String ngayLap, int tongTien,
-			String trangThai) {
-		
+	private int Enable ;
+	private int ThanhToan ;
+	public HoaDonDTO(String maHoaDon, String maNhanVien, String maUser, String ngayLap, int tongTien, int enable,
+			int thanhToan) {
+	
 		MaHoaDon = maHoaDon;
 		MaNhanVien = maNhanVien;
 		MaUser = maUser;
 		NgayLap = ngayLap;
 		TongTien = tongTien;
-		TrangThai = trangThai;
+		Enable = enable;
+		ThanhToan = thanhToan;
 	}
 	public HoaDonDTO() {
 	
@@ -50,17 +52,19 @@ public class HoaDonDTO {
 	public void setTongTien(int tongTien) {
 		TongTien = tongTien;
 	}
-	public String getTrangThai() {
-		return TrangThai;
+	public int getEnable() {
+		return Enable;
 	}
-	public void setTrangThai(String trangThai) {
-		TrangThai = trangThai;
+	public void setEnable(int enable) {
+		Enable = enable;
 	}
-	@Override
-	public String toString() {
-		return "HoaDonDTO [MaHoaDon=" + MaHoaDon + ", MaNhanVien=" + MaNhanVien + ", MaUser=" + MaUser + ", NgayLap="
-				+ NgayLap + ", TongTien=" + TongTien + ", TrangThai=" + TrangThai + "]";
+	public int getThanhToan() {
+		return ThanhToan;
+	}
+	public void setThanhToan(int thanhToan) {
+		ThanhToan = thanhToan;
 	} 
+	
 	
 	
 }
