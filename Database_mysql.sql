@@ -71,8 +71,8 @@ CREATE TABLE SanPham(
   TenSP NVARCHAR(100) NOT NULL , 
   SoLuong int NOT NULL , 
   Gia int NOT NULL , 
-  MaLoai VARCHAR(10) NOT NULL  , 
-  MaNSX VARCHAR(10) NOT NULL ,
+  MaLoai VARCHAR(10)   , 
+  MaNSX VARCHAR(10)  ,
   Image NVARCHAR(1000),
   GhiChu NVARCHAR(1000), 
   FOREIGN KEY (MaNSX) REFERENCES NhaSanXuat(MaNSX),
@@ -82,8 +82,8 @@ CREATE TABLE SanPham(
 -- Tạo bảng HoaDon
 CREATE TABLE HoaDon(
   MaHD VARCHAR(10) NOT NULL PRIMARY KEY , 
-  MaNhanVien VARCHAR(100)  NOT NULL ,  
-  MaUser VARCHAR(100)  NOT NULL , 
+  MaNhanVien VARCHAR(100)  ,  
+  MaUser VARCHAR(100)  , 
   NgayLap DATE NOT NULL ,
   TongTien int NOT null, 
   Enable INT NOT NULL , 
@@ -94,13 +94,12 @@ CREATE TABLE HoaDon(
 
 -- Tạo bảng ChiTietHD
 CREATE TABLE ChiTietHD(
-  MaSP VARCHAR(10) NOT NULL , 
-  MaHD VARCHAR(10) NOT NULL , 
+  MaSP VARCHAR(10)  , 
+  MaHD VARCHAR(10)  , 
   SoLuong int NOT NULL , 
   Gia int NOT NULL ,
   ThoiGianBaoHanh INT NOT NULL , 
   GhiChu NVARCHAR(1000) , 
-  PRIMARY KEY (MAHD, MASP),
   FOREIGN KEY (MaSP) REFERENCES SanPham(MaSP),
   FOREIGN KEY (MAHD) REFERENCES HoaDon(MAHD)
 );
@@ -108,8 +107,8 @@ CREATE TABLE ChiTietHD(
 -- Tạo bảng PhieuNhap
 CREATE TABLE PhieuNhap(
   MaPNH VARCHAR(10) NOT NULL PRIMARY KEY , 
-  MaNCC VARCHAR(10) NOT NULL,
-  MaNhanVien VARCHAR(100)  NOT NULL , 
+  MaNCC VARCHAR(10) ,
+  MaNhanVien VARCHAR(100)  , 
   NgayNhap DATE NOT NULL ,
   TongTien INT NOT NULL ,
   Enable INT NOT NULL , 
@@ -119,12 +118,12 @@ CREATE TABLE PhieuNhap(
 
 -- Tạo bảng ChiTietPhieuNhap
 CREATE TABLE ChiTietPhieuNhap(
-  MaSP VARCHAR(10) NOT NULL , 
-  MaPNH VARCHAR(10) NOT NULL , 
+  MaSP VARCHAR(10) , 
+  MaPNH VARCHAR(10) , 
   DonGiaNhap int not NULL , 
   SoLuong int NOT NULL ,  
   GhiChu NVARCHAR(1000) ,
-  PRIMARY KEY (MaSP, MaPNH),
+ 
   FOREIGN KEY (MaSP) REFERENCES SanPham(MaSP), 
   FOREIGN KEY (MaPNH) REFERENCES PhieuNhap(MaPNH)
 );
@@ -132,9 +131,9 @@ CREATE TABLE ChiTietPhieuNhap(
 -- Tạo bảng PhieuBaoTri
 CREATE TABLE PhieuBaoTri(
   MaBT VARCHAR(10) NOT NULL PRIMARY KEY , 
-  MaNhanVien VARCHAR(100)  NOT NULL , 
-  MaUser VARCHAR(100) NOT NULL,
-  MaHD VARCHAR(10) NOT NULL , 
+  MaNhanVien VARCHAR(100)  , 
+  MaUser VARCHAR(100) ,
+  MaHD VARCHAR(10) , 
   NgayLap DATE NOT NULL ,
   Enable INT NOT NULL , 
   FOREIGN KEY (MaHD) REFERENCES HoaDon(MaHD),
@@ -144,10 +143,10 @@ CREATE TABLE PhieuBaoTri(
 
 -- Tạo bảng ChiTietPhieuBaoTri
 CREATE TABLE ChiTietPhieuBaoTri(
-  MaSP VARCHAR(10) NOT NULL , 
-  MaBT VARCHAR(10) NOT NULL , 
+  MaSP VARCHAR(10)  , 
+  MaBT VARCHAR(10)  , 
   GhiChu NVARCHAR(1000) ,
-  PRIMARY KEY (MaSP, MaBT),
+ 
   FOREIGN KEY (MaSP) REFERENCES SanPham(MaSP), 
   FOREIGN KEY (MaBT) REFERENCES PhieuBaoTri(MaBT)
 );

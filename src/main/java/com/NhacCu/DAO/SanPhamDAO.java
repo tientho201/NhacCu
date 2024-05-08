@@ -1,5 +1,6 @@
 package com.NhacCu.DAO;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class SanPhamDAO {
 				String MaNSX = rs.getString("MaNSX");
 				String Image = rs.getString("Image");
 				String GhiChu = rs.getString("GhiChu");
-				SanPhamDTO spDTO = new SanPhamDTO(MaSP,TenSP,SoLuong,Gia,MaLoai,MaNSX, Image,GhiChu);
+				SanPhamDTO spDTO = new SanPhamDTO(MaSP, TenSP, SoLuong, Gia, MaLoai, MaNSX, Image, GhiChu);
 				dssp.add(spDTO);
 			}
 			rs.close();
@@ -59,24 +60,30 @@ public class SanPhamDAO {
 	public void add(SanPhamDTO sp) {
 		ConnectJDBC connection = new ConnectJDBC();
 		String sql = "INSERT INTO SanPham  VALUES(";
-		sql += "N'" +  sp.getMaSanPham()+ "',";
-		sql += "N'" +  sp.getTenSanPham() + "',";
+		sql += "N'" + sp.getMaSanPham() + "',";
+		sql += "N'" + sp.getTenSanPham() + "',";
 		sql += "'" + sp.getSoLuong() + "', ";
-		sql += "'" +sp.getGia() + "',";
+		sql += "'" + sp.getGia() + "',";
 		sql += "N'" + sp.getMaLoai() + "',";
-		sql += "N'" + sp.getMaNSX()  + "',";
-		sql += "N'" + sp.getImage()  + "',";
-		sql += "N'" +sp.getGhiChu()  + "');";
+		sql += "N'" + sp.getMaNSX() + "',";
+		sql += "N'" + sp.getImage() + "',";
+		sql += "N'" + sp.getGhiChu() + "');";
 		System.out.println(sql);
 		connection.executeUpdate(sql);
 	}
 
 	public void delete(String maSP) {
 		ConnectJDBC connection = new ConnectJDBC();
+		String sqlHD = "UPDATE ChiTietHD SET MaSP = NULL WHERE MaSP = '" + maSP + "'";
+		String sqlpbt = "UPDATE ChiTietPhieuBaoTri SET MaSP = NULL WHERE MaSP = '" + maSP + "'";
+		String sqlPNH = "UPDATE ChiTietPhieuNhap SET MaSP = NULL WHERE MaSP = '" + maSP + "'";
 		String sqlSanPham = "DELETE FROM SanPham WHERE MaSP = '" + maSP + "'";
-		String sqlPNH = "UPDATE ChiTietPhieuNhap SET MaSP = NULL WHERE MaSP = '" + maSP+"'";
 		System.out.println(sqlPNH);
 		connection.executeUpdate(sqlPNH);
+		System.out.println(sqlHD);
+		connection.executeUpdate(sqlHD);
+		System.out.println(sqlpbt);
+		connection.executeUpdate(sqlpbt);
 		System.out.println(sqlSanPham);
 		connection.executeUpdate(sqlSanPham);
 	}

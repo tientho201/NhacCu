@@ -15,6 +15,7 @@ public class NhaSanXuatDAO {
 	public NhaSanXuatDAO() {
 
 	}
+
 	public ArrayList<NhaSanXuatDTO> list() {
 		ArrayList<NhaSanXuatDTO> dsnsx = new ArrayList<NhaSanXuatDTO>();
 		try {
@@ -23,8 +24,8 @@ public class NhaSanXuatDAO {
 			while (rs.next()) {
 				String MaNSX = rs.getString("MaNSX");
 				String TenNSX = rs.getString("TenNSX");
-			
-				NhaSanXuatDTO nsxDTO = new NhaSanXuatDTO(MaNSX,TenNSX);
+
+				NhaSanXuatDTO nsxDTO = new NhaSanXuatDTO(MaNSX, TenNSX);
 				dsnsx.add(nsxDTO);
 			}
 			rs.close();
@@ -34,6 +35,7 @@ public class NhaSanXuatDAO {
 		}
 		return dsnsx;
 	}
+
 	public void update(NhaSanXuatDTO nsx) {
 		ConnectJDBC connection = new ConnectJDBC();
 		String sql = "UPDATE NhaSanXuat SET ";
@@ -42,11 +44,12 @@ public class NhaSanXuatDAO {
 		System.out.println(sql);
 		connection.executeUpdate(sql);
 	}
-	public void add(NhaSanXuatDTO nsx ) {
+
+	public void add(NhaSanXuatDTO nsx) {
 		ConnectJDBC connection = new ConnectJDBC();
 		String sql = "INSERT INTO NhaSanXuat  VALUES(";
-		sql += "'" +  nsx.getMaNSX()+ "',";
-		sql += "N'" +  nsx.getTenNSX()+ "');";
+		sql += "'" + nsx.getMaNSX() + "',";
+		sql += "N'" + nsx.getTenNSX() + "');";
 		System.out.println(sql);
 		connection.executeUpdate(sql);
 	}
@@ -54,9 +57,9 @@ public class NhaSanXuatDAO {
 	public void delete(String MaNSX) {
 		ConnectJDBC connection = new ConnectJDBC();
 		String sql = "DELETE FROM NhaSanXuat WHERE MaNSX = '" + MaNSX + "'";
-		String sqlSanPham = "UPDATE SanPham SET MaNSX = NULL WHERE MaNSX = '" + MaNSX+"'";
-		System.out.println(sql);
+		String sqlSanPham = "UPDATE SanPham SET MaNSX = NULL WHERE MaNSX = '" + MaNSX + "'";
 		System.out.println(sqlSanPham);
+		System.out.println(sql);
 		connection.executeUpdate(sqlSanPham);
 		connection.executeUpdate(sql);
 	}
