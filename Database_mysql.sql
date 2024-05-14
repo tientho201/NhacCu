@@ -2,7 +2,7 @@
 CREATE DATABASE IF NOT EXISTS NhacCu;
 
 -- Sử dụng database NhacCu
-USE NhacCu;
+USE nhaccu;
 
 -- Tạo bảng Account
 CREATE TABLE Account (

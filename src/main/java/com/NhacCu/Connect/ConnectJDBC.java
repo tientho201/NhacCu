@@ -29,8 +29,12 @@ public class ConnectJDBC {
     public void disConnect()
     { 
         try{
-        	statement.close();
-        	connection.close();
+        	 if (statement != null) {
+                 statement.close();
+             }
+             if (connection != null) {
+                 connection.close();
+             }
         }catch (SQLException E){}
     }
     
@@ -66,6 +70,9 @@ public class ConnectJDBC {
     public boolean isConnect()
     {
         return connection!=null?true:false;
+    }
+    public Statement createStatement() throws SQLException {
+        return connection.createStatement();
     }
 }
 

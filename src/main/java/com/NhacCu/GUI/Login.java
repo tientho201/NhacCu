@@ -74,7 +74,7 @@ public class Login extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setResizable(false);
-		
+
 		JLabel TenDangNhap = new JLabel("Tên Đăng Nhập");
 		TenDangNhap.setForeground(new Color(255, 255, 255));
 		TenDangNhap.setFont(new Font("Times New Roman", Font.PLAIN, 25));
@@ -127,9 +127,9 @@ public class Login extends JFrame {
 		NotifiError.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		NotifiError.setBounds(365, 364, 511, 33);
 		contentPane.add(NotifiError);
-		
+
 //		Nút thay đổi mật khẩu
-		
+
 		JButton BtnChangePassword = new JButton("Đổi Mật Khẩu");
 		BtnChangePassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -137,21 +137,22 @@ public class Login extends JFrame {
 				changPassword.setVisible(true);
 			}
 		});
-		BtnChangePassword.setIcon(new ImageIcon(Login.class.getResource("/com/NhacCu/item/Pictogrammers-Material-Form-textbox-password.16.png")));
+		BtnChangePassword.setIcon(new ImageIcon(
+				Login.class.getResource("/com/NhacCu/item/Pictogrammers-Material-Form-textbox-password.16.png")));
 		BtnChangePassword.setToolTipText("Thay Đổi Mật Khẩu");
 		BtnChangePassword.setIgnoreRepaint(true);
 		BtnChangePassword.setIconTextGap(2);
 		BtnChangePassword.setFont(new Font("Times New Roman", Font.PLAIN, 22));
 		BtnChangePassword.setBounds(365, 440, 189, 51);
 		contentPane.add(BtnChangePassword);
-		
+
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(Login.class.getResource("/com/NhacCu/item/Anh_Nen.jpg")));
 		lblNewLabel.setBounds(0, 0, 888, 553);
 		contentPane.add(lblNewLabel);
 
 //		Xử lí  Nút Đăng Kí 
-		
+
 		BtnDangKi.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -232,6 +233,12 @@ public class Login extends JFrame {
 						
 										admin.setVisible(true);
 										admin.tendangnhap.setText("Xin Chào:  " + tenDangNhapValue);
+									}else {
+										if(accBUS.checkRole(tenDangNhapValue).equals("KhachHang")) {
+											UserGUI user = new UserGUI(tenDangNhapValue);	
+											user.setVisible(true);
+										
+										}
 									}
 								}
 							}

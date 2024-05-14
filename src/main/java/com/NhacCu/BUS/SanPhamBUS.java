@@ -81,5 +81,13 @@ public class SanPhamBUS {
 		}
 		return null ; 
 	}
-
+	
+	public String PutOnImage(String maSP) {
+		for (SanPhamDTO sp : dssp) {
+			if (sp.getMaSanPham().equals(maSP)) {
+				return sp.getImage();
+			}
+		}
+		return null ; 
+	}
 }
